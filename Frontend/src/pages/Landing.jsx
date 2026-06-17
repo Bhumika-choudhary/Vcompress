@@ -13,13 +13,13 @@ import Img8 from "../assets/Icon (4).svg";
 import Img9 from "../assets/Icon (5).svg";
 
 import Img10 from "../assets/Background (4).svg";
-import Img11 from "../assets/Icon.svg"
-import Img12 from "../assets/Container.svg"
-import Img13 from "../assets/Background (5).svg"
+import Img11 from "../assets/Icon.svg";
+import Img12 from "../assets/Container.svg";
+import Img13 from "../assets/Background (5).svg";
 // import Img14 from "../assets/Icon.svg"
-import Img15 from "../assets/Container.png"
-import Img16 from "../assets/Icon (1).svg"
-import Img17 from "../assets/blue.svg"
+import Img15 from "../assets/Container.png";
+import Img16 from "../assets/Icon (1).svg";
+import Img17 from "../assets/blue.svg";
 
 // container
 
@@ -59,21 +59,142 @@ const Counter = ({ end, suffix = "", duration = 2000 }) => {
 };
 
 const HeroSection = () => {
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-on-scroll');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    const animatedElements = document.querySelectorAll('.scroll-animate');
+    animatedElements.forEach(el => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <>
-      <section className="min-h-screen flex items-center bg-linear-to-br from-[#DFE4FE] to-[#EDE1FE]">
+      <style>
+        {`
+          @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+          }
+          @keyframes fadeInUp {
+            from {
+              opacity: 0;
+              transform: translateY(30px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+          @keyframes fadeInLeft {
+            from {
+              opacity: 0;
+              transform: translateX(-30px);
+            }
+            to {
+              opacity: 1;
+              transform: translateX(0);
+            }
+          }
+          @keyframes fadeInRight {
+            from {
+              opacity: 0;
+              transform: translateX(30px);
+            }
+            to {
+              opacity: 1;
+              transform: translateX(0);
+            }
+          }
+          @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+          }
+          @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+          }
+          @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+          }
+          @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+          }
+          @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.3); }
+            50% { opacity: 1; transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+          }
+          .animate-fade-in {
+            animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+          }
+          .animate-fade-in-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+          }
+          .animate-fade-in-left {
+            animation: fadeInLeft 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+          }
+          .animate-fade-in-right {
+            animation: fadeInRight 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+          }
+          .animate-float {
+            animation: float 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+          }
+          .animate-pulse {
+            animation: pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+          }
+          .animate-shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+          }
+          .animate-gradient {
+            background-size: 200% 200%;
+            animation: gradientShift 8s ease infinite;
+          }
+          .animate-bounce-in {
+            animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+          }
+          .scroll-animate {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+          }
+          .scroll-animate.animate-on-scroll {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        `}
+      </style>
+      <section className="min-h-screen flex items-center bg-linear-to-br from-[#DFE4FE] to-[#EDE1FE] animate-gradient">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 w-full z">
           {/* Hero Content */}
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
             {/* Left Side */}
-            <div className="max-w-md mx-auto lg:mx-0">
-              <div className="inline-flex items-center px-3 sm:px-4 py-2 rounded-full bg-white shadow-sm mb-6 sm:mb-8">
+            <div className="max-w-md mx-auto lg:mx-0 animate-fade-in-up">
+              <div className="inline-flex items-center px-3 sm:px-4 py-2 rounded-full bg-white shadow-sm mb-6 sm:mb-8 animate-fade-in" style={{ animationDelay: '0.1s' }}>
                 <span className="text-[10px] sm:text-[11px] font-medium text-[#4C31CE]">
                   ✨ AI-Powered File Compression Platform
                 </span>
               </div>
 
-              <h1 className="text-[36px] sm:text-[48px] lg:text-[60px] leading-[1.08] font-bold tracking-[-2px] text-black">
+              <h1 className="text-[36px] sm:text-[48px] lg:text-[60px] leading-[1.08] font-bold tracking-[-2px] text-black animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
                 Compress
                 <br />
                 Everything.
@@ -85,18 +206,18 @@ const HeroSection = () => {
                 </span>
               </h1>
 
-              <p className="mt-4 sm:mt-6 max-w-md text-[12px] sm:text-[13px] leading-6 text-[#434655]">
+              <p className="mt-4 sm:mt-6 max-w-md text-[12px] sm:text-[13px] leading-6 text-[#434655] animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
                 Reduce file sizes without sacrificing quality. Compress images,
                 PDFs, videos, audio, and documents from a single intelligent
                 platform.
               </p>
 
-              <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 mt-6 sm:mt-8">
-                <button className="w-full sm:w-auto h-12 px-6 sm:px-7 rounded-[14px] bg-[#2F38D3] text-white text-[14px] sm:text-[15px] font-medium shadow-lg hover:bg-[#2430C8] transition">
+              <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 mt-6 sm:mt-8 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+                <button className="w-full sm:w-auto h-12 px-6 sm:px-7 rounded-[14px] bg-[#2F38D3] text-white text-[14px] sm:text-[15px] font-medium shadow-lg hover:bg-[#2430C8] transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:-translate-y-1 transform">
                   Start Compressing Free
                 </button>
 
-                <button className="w-full sm:w-auto h-12 px-6 sm:px-7 rounded-[14px] bg-white text-sm font-medium text-gray-700 shadow-sm">
+                <button className="w-full sm:w-auto h-12 px-6 sm:px-7 rounded-[14px] bg-white text-sm font-medium text-gray-700 shadow-sm hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-1 transform">
                   View Demo
                 </button>
               </div>
@@ -104,7 +225,7 @@ const HeroSection = () => {
 
             {/* Right Side Card */}
             <div className="flex justify-center lg:justify-end mt-12 lg:mt-0">
-              <div className="relative w-full max-w-lg rounded-[22px] bg-[#F5F4FA] p-4 sm:p-6 shadow-md">
+              <div className="relative w-full max-w-lg rounded-[22px] bg-[#F5F4FA] p-4 sm:p-6 shadow-md animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
                 {/* Top Header */}
                 <div className="mb-4 sm:mb-6 flex items-center justify-between">
                   <div className="flex gap-2">
@@ -114,21 +235,27 @@ const HeroSection = () => {
                   </div>
 
                   <div className="rounded-full bg-[#E9F0FF] px-2 sm:px-3 py-1 text-[11px] sm:text-[13px] font-medium text-[#2F38D3]">
-                   Optimizing Engine v2.4
+                    Optimizing Engine v2.4
                   </div>
                 </div>
 
                 {/* File 1 */}
                 <div className="space-y-3 sm:space-y-4">
-                  <div className="flex items-center justify-between rounded-2xl bg-white px-4 sm:px-5 py-3 sm:py-4">
+                  <div className="flex items-center justify-between rounded-2xl bg-white px-4 sm:px-5 py-3 sm:py-4 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
                     <div className="flex items-center gap-3">
-                      <img src={Img1} alt="" className="h-8 w-8 sm:h-10 sm:w-10" />
+                      <img
+                        src={Img1}
+                        alt=""
+                        className="h-8 w-8 sm:h-10 sm:w-10"
+                      />
 
                       <div>
                         <p className="text-[14px] sm:text-[16px] font-medium text-black">
                           Annual_Report.pdf
                         </p>
-                        <p className="text-[11px] sm:text-[12px] text-gray-400">12.8 MB</p>
+                        <p className="text-[11px] sm:text-[12px] text-gray-400">
+                          12.8 MB
+                        </p>
                       </div>
                     </div>
 
@@ -138,15 +265,21 @@ const HeroSection = () => {
                   </div>
 
                   {/* File 2 */}
-                  <div className="flex items-center justify-between rounded-2xl bg-white px-4 sm:px-5 py-3 sm:py-4">
+                  <div className="flex items-center justify-between rounded-2xl bg-white px-4 sm:px-5 py-3 sm:py-4 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
                     <div className="flex items-center gap-3">
-                      <img src={Img2} alt="" className="h-8 w-8 sm:h-10 sm:w-10" />
+                      <img
+                        src={Img2}
+                        alt=""
+                        className="h-8 w-8 sm:h-10 sm:w-10"
+                      />
 
                       <div>
                         <p className="text-[14px] sm:text-[16px] font-medium text-black">
                           Product_Demo.mp4
                         </p>
-                        <p className="text-[11px] sm:text-[12px] text-gray-400">256 MB</p>
+                        <p className="text-[11px] sm:text-[12px] text-gray-400">
+                          256 MB
+                        </p>
                       </div>
                     </div>
 
@@ -156,15 +289,21 @@ const HeroSection = () => {
                   </div>
 
                   {/* File 3 */}
-                  <div className="flex items-center justify-between rounded-2xl bg-white px-4 sm:px-5 py-3 sm:py-4">
+                  <div className="flex items-center justify-between rounded-2xl bg-white px-4 sm:px-5 py-3 sm:py-4 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
                     <div className="flex items-center gap-3">
-                      <img src={Img3} alt="" className="h-8 w-8 sm:h-10 sm:w-10" />
+                      <img
+                        src={Img3}
+                        alt=""
+                        className="h-8 w-8 sm:h-10 sm:w-10"
+                      />
 
                       <div>
                         <p className="text-[14px] sm:text-[16px] font-medium text-black">
                           Hero_Background.jpg
                         </p>
-                        <p className="text-[11px] sm:text-[12px] text-gray-400">8.5 MB</p>
+                        <p className="text-[11px] sm:text-[12px] text-gray-400">
+                          8.5 MB
+                        </p>
                       </div>
                     </div>
 
@@ -175,8 +314,12 @@ const HeroSection = () => {
                 </div>
 
                 {/* Floating Analytics Card */}
-                <div className="absolute -right-4 sm:-right-10 -top-4 sm:-top-5 rounded-2xl bg-white px-3 sm:px-4 py-2 sm:py-3 shadow-xl hidden sm:block">
-                  <img src={Img4} alt="" className=" mb-2 h-5 w-5 sm:h-6 sm:w-6" />
+                <div className="absolute -right-4 sm:-right-10 -top-4 sm:-top-5 rounded-2xl bg-white px-3 sm:px-4 py-2 sm:py-3 shadow-xl hidden sm:block animate-float">
+                  <img
+                    src={Img4}
+                    alt=""
+                    className=" mb-2 h-5 w-5 sm:h-6 sm:w-6"
+                  />
 
                   <h4 className="text-[20px] sm:text-[24px] font-bold leading-none text-black">
                     32.4x
@@ -189,9 +332,10 @@ const HeroSection = () => {
 
                 {/* Success Card */}
                 <div
-                  className="absolute -bottom-1 right-4 sm:right-6 flex items-center gap-2 sm:gap-3 rounded-2xl bg-white px-3 sm:px-4 py-2 sm:py-3 shadow-xl"
-                  style={{ marginBottom: "20px sm:29px" }}>
-                  <img src={Img5} alt="" className="h-10 w-10 sm:h-12 sm:w-12" />
+                  className="absolute -bottom-1 right-4 sm:right-6 flex items-center gap-2 sm:gap-3 rounded-2xl bg-white px-3 sm:px-4 py-2 sm:py-3 shadow-xl animate-float"
+                  style={{ marginBottom: "20px", animationDelay: "0.5s"}}
+                >
+                  <img src={Img5} alt="" className="h-9 w-9 sm:h-12 sm:w-12" />
 
                   <div>
                     <p className="text-[12px] sm:text-[14px] font-semibold text-black">
@@ -255,7 +399,7 @@ const HeroSection = () => {
 
       {/* ===============compression feature  section===============*/}
 
-      <section className="bg-[#f5efff] py-12 sm:py-16 lg:py-20">
+      <section className="bg-[#f5efff] py-12 sm:py-16 lg:py-20 scroll-animate">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           {/* Heading */}
           <div className="text-center mb-8 sm:mb-10">
@@ -272,13 +416,9 @@ const HeroSection = () => {
           {/* Grid */}
           <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
             {/* Universal Compression */}
-            <div className="col-span-1 md:col-span-12 lg:col-span-8 bg-white rounded-3xl p-5 sm:p-8 relative overflow-hidden min-h-44">
+            < div className="col-span-1 md:col-span-12 lg:col-span-8 bg-white rounded-3xl p-5 sm:p-8 relative overflow-hidden min-h-44 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02]">
               <div className="mb-3 sm:mb-4">
-                <img
-                  src={Img10}
-                  alt=""
-                  className="w-8 h-7 sm:w-9 sm:h-8"
-                />
+                <img src={Img10} alt="" className="w-8 h-7 sm:w-9 sm:h-8" />
               </div>
 
               <h3 className="text-[18px] sm:text-[20px] lg:text-[22px] font-semibold text-black mb-2 sm:mb-3">
@@ -300,7 +440,7 @@ const HeroSection = () => {
                 ].map((item, index) => (
                   <span
                     key={index}
-                    className="px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full bg-[#F5F5F5] text-[11px] sm:text-xs text-[#555]"
+                    className="px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full bg-[#F5F5F5] text-[11px] sm:text-xs text-[#555] hover:bg-[#E9E9E9] transition-colors cursor-pointer"
                   >
                     {item}
                   </span>
@@ -316,7 +456,7 @@ const HeroSection = () => {
             </div>
 
             {/* Lightning Fast */}
-            <div className="col-span-1 md:col-span-12 lg:col-span-4 bg-[#0D40C6]  rounded-3xl p-5 sm:p-8 min-h-44 flex flex-col justify-center items-center text-center">
+            <div className="col-span-1 md:col-span-12 lg:col-span-4 bg-[#0D40C6]  rounded-3xl p-5 sm:p-8 min-h-44 flex flex-col justify-center items-center text-center hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:bg-[#0B35A8]">
               <img
                 src={Img11}
                 alt=""
@@ -334,7 +474,7 @@ const HeroSection = () => {
             </div>
 
             {/* Quality Control */}
-            <div className="col-span-1 md:col-span-6 lg:col-span-4 bg-white rounded-3xl p-5 sm:p-8 min-h-44">
+            <div className="col-span-1 md:col-span-6 lg:col-span-4 bg-white rounded-3xl p-5 sm:p-8 min-h-44 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02]">
               <img
                 src={Img12}
                 alt=""
@@ -351,7 +491,7 @@ const HeroSection = () => {
             </div>
 
             {/* Storage Optimization */}
-            <div className="col-span-1 md:col-span-6 lg:col-span-8 bg-white rounded-3xl p-5 sm:p-8 min-h-44 flex flex-col sm:flex-row justify-between items-start sm:items-center">
+            <div className="col-span-1 md:col-span-6 lg:col-span-8 bg-white rounded-3xl p-5 sm:p-8 min-h-44 flex flex-col sm:flex-row justify-between items-start sm:items-center hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02]">
               <div>
                 <img
                   src={Img13}
@@ -378,7 +518,7 @@ const HeroSection = () => {
             </div>
 
             {/* Lower Bandwidth */}
-            <div className="col-span-1 md:col-span-6 lg:col-span-6 bg-[#24292E] rounded-3xl p-5 sm:p-8 min-h-30 flex items-center">
+            <div className="col-span-1 md:col-span-6 lg:col-span-6 bg-[#24292E] rounded-3xl p-5 sm:p-8 min-h-30 flex items-center hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:bg-[#1E2226]">
               <img
                 src={Img17}
                 alt=""
@@ -397,7 +537,7 @@ const HeroSection = () => {
             </div>
 
             {/* Simplified Workflow */}
-            <div className="col-span-1 md:col-span-6 lg:col-span-6 bg-white rounded-3xl p-5 sm:p-8 min-h-30 flex items-center">
+            <div className="col-span-1 md:col-span-6 lg:col-span-6 bg-white rounded-3xl p-5 sm:p-8 min-h-30 flex items-center hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02]">
               <img
                 src={Img16}
                 alt=""
@@ -420,7 +560,7 @@ const HeroSection = () => {
 
       {/*=============compression profile section==========*/}
 
-      <section className="bg-[#E9EDFD] py-12 sm:py-16 lg:py-20">
+      <section className="bg-[#E9EDFD] py-12 sm:py-16 lg:py-20 scroll-animate">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           {/* Top Card */}
           <div className="rounded-2xl border border-[#D9DDE8] bg-[#F7F7FA] shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
@@ -469,7 +609,9 @@ const HeroSection = () => {
                       <p className="text-[10px] sm:text-[11px] font-semibold text-[#111]">
                         High
                       </p>
-                      <p className="text-[9px] sm:text-[10px] text-[#7B7B7B]">Max Quality</p>
+                      <p className="text-[9px] sm:text-[10px] text-[#7B7B7B]">
+                        Max Quality
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -497,17 +639,23 @@ const HeroSection = () => {
                     Original
                   </p>
 
-                  <h3 className="text-2xl sm:text-3xl font-bold text-gray-900">124 MB</h3>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                    124 MB
+                  </h3>
                 </div>
 
-                <div className="mt-2 sm:mt-3 text-gray-500 text-xl sm:text-2xl">→</div>
+                <div className="mt-2 sm:mt-3 text-gray-500 text-xl sm:text-2xl">
+                  →
+                </div>
 
                 <div className="text-right">
                   <p className="text-[8px] sm:text-[10px] font-semibold uppercase tracking-wider text-gray-400">
                     VCompressed
                   </p>
 
-                  <h3 className="text-2xl sm:text-3xl font-bold text-blue-700">28 MB</h3>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-blue-700">
+                    28 MB
+                  </h3>
                 </div>
               </div>
 
@@ -552,18 +700,30 @@ const HeroSection = () => {
               <ul className="mt-5 sm:mt-6 space-y-2 sm:space-y-3">
                 <li className="flex items-center gap-2 text-[11px] sm:text-[12px] font-medium text-[#111]">
                   <span className="flex items-center">
-                    <img src={Icon} alt="icon" className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                    <img
+                      src={Icon}
+                      alt="icon"
+                      className="h-3.5 w-3.5 sm:h-4 sm:w-4"
+                    />
                   </span>
                   Structural Similarity Index (SSIM) Calculation
                 </li>
 
                 <li className="flex items-center gap-2 text-[11px] sm:text-[12px] font-medium text-[#111]">
-                  <img src={Icon} alt="icon" className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                  <img
+                    src={Icon}
+                    alt="icon"
+                    className="h-3.5 w-3.5 sm:h-4 sm:w-4"
+                  />
                   Peak Signal-to-Noise Ratio (PSNR) Reports
                 </li>
 
                 <li className="flex items-center gap-2 text-[11px] sm:text-[12px] font-medium text-[#111]">
-                  <img src={Icon} alt="icon" className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                  <img
+                    src={Icon}
+                    alt="icon"
+                    className="h-3.5 w-3.5 sm:h-4 sm:w-4"
+                  />
                   Bitrate Allocation Visualization
                 </li>
               </ul>
@@ -574,7 +734,7 @@ const HeroSection = () => {
 
       {/*==========simplicity engineered=========*/}
 
-      <section className="bg-[#eafbff] py-16 sm:py-20 lg:py-24">
+      <section className="bg-[#eafbff] py-16 sm:py-20 lg:py-24 scroll-animate">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           {/* Heading */}
           <div className="mb-12 sm:mb-16 lg:mb-20 text-center">
@@ -589,9 +749,11 @@ const HeroSection = () => {
             <div className="hidden md:block absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-[#C7D6FF]" />
 
             {/* Step 1 */}
-            <div className="relative mb-12 sm:mb-16 lg:mb-24 grid grid-cols-1 md:grid-cols-2 items-center gap-6 md:gap-0">
+            <div className="relative mb-12 sm:mb-16 lg:mb-24 grid grid-cols-1 md:grid-cols-2 items-center gap-6 md:gap-0 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
               <div className="md:pr-20 text-center md:text-right order-2 md:order-1">
-                <h3 className="mb-2 text-lg sm:text-xl font-semibold">Upload Assets</h3>
+                <h3 className="mb-2 text-lg sm:text-xl font-semibold">
+                  Upload Assets
+                </h3>
 
                 <p className="mx-auto md:ml-auto max-w-xs text-sm leading-6 text-[#666]">
                   Drag and drop individual files or complete folders. Our batch
@@ -600,31 +762,33 @@ const HeroSection = () => {
               </div>
 
               <div className="flex justify-center md:pl-20 order-1 md:order-2">
-                <img src={Img6} alt="" className="h-10 w-10 opacity-100" />
+                <img src={Img6} alt="" className="h-10 w-10 opacity-100 hover:scale-110 transition-transform duration-300" />
               </div>
 
-              <div className="hidden md:flex absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#0F36C7] text-xs font-bold text-white shadow-lg">
+              <div className="hidden md:flex absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#0F36C7] text-xs font-bold text-white shadow-lg hover:scale-110 transition-transform duration-300">
                 1
               </div>
-              
+
               {/* Mobile Step Indicator */}
-              <div className="flex md:hidden absolute left-4 top-0 h-8 w-8 items-center justify-center rounded-full bg-[#0F36C7] text-xs font-bold text-white shadow-lg order-0">
+              <div className="flex md:hidden absolute left-4 top-0 h-8 w-8 items-center justify-center rounded-full bg-[#0F36C7] text-xs font-bold text-white shadow-lg order-0 hover:scale-110 transition-transform duration-300">
                 1
               </div>
             </div>
 
             {/* Step 2 */}
-            <div className="relative mb-12 sm:mb-16 lg:mb-24 grid grid-cols-1 md:grid-cols-2 items-center gap-6 md:gap-0">
+            <div className="relative mb-12 sm:mb-16 lg:mb-24 grid grid-cols-1 md:grid-cols-2 items-center gap-6 md:gap-0 animate-fade-in-up" style={{ animationDelay: '0.7s' }}>
               <div className="flex justify-center md:justify-end order-1 md:order-1">
                 <img
                   src={Img7}
                   alt=""
-                  className="h-10 w-12 opacity-100 md:mr-20"
+                  className="h-10 w-12 opacity-100 md:mr-20 hover:scale-110 transition-transform duration-300"
                 />
               </div>
 
               <div className="md:pl-20 text-center md:text-left order-2 md:order-2">
-                <h3 className="mb-2 text-lg sm:text-xl font-semibold">Choose Quality</h3>
+                <h3 className="mb-2 text-lg sm:text-xl font-semibold">
+                  Choose Quality
+                </h3>
 
                 <p className="mx-auto md:max-w-xs text-sm leading-6 text-[#666]">
                   Select from our presets or define custom bitrate constraints
@@ -632,20 +796,22 @@ const HeroSection = () => {
                 </p>
               </div>
 
-              <div className="hidden md:flex absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#7B3FF2] text-xs font-bold text-white shadow-lg">
+              <div className="hidden md:flex absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#7B3FF2] text-xs font-bold text-white shadow-lg hover:scale-110 transition-transform duration-300">
                 2
               </div>
-              
+
               {/* Mobile Step Indicator */}
-              <div className="flex md:hidden absolute left-4 top-0 h-8 w-8 items-center justify-center rounded-full bg-[#7B3FF2] text-xs font-bold text-white shadow-lg order-0">
+              <div className="flex md:hidden absolute left-4 top-0 h-8 w-8 items-center justify-center rounded-full bg-[#7B3FF2] text-xs font-bold text-white shadow-lg order-0 hover:scale-110 transition-transform duration-300">
                 2
               </div>
             </div>
 
             {/* Step 3 */}
-            <div className="relative mb-12 sm:mb-16 lg:mb-24 grid grid-cols-1 md:grid-cols-2 items-center gap-6 md:gap-0">
+            <div className="relative mb-12 sm:mb-16 lg:mb-24 grid grid-cols-1 md:grid-cols-2 items-center gap-6 md:gap-0 animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
               <div className="md:pr-20 text-center md:text-right order-2 md:order-1">
-                <h3 className="mb-2 text-lg sm:text-xl font-semibold">AI Compression</h3>
+                <h3 className="mb-2 text-lg sm:text-xl font-semibold">
+                  AI Compression
+                </h3>
 
                 <p className="mx-auto md:ml-auto max-w-xs text-sm leading-6 text-[#666]">
                   Our V-Core engine analyzes each frame and pixel, discarding
@@ -654,31 +820,33 @@ const HeroSection = () => {
               </div>
 
               <div className="flex justify-center md:pl-20 order-1 md:order-2">
-                <img src={Img8} alt="" className="h-10 w-10 opacity-100" />
+                <img src={Img8} alt="" className="h-10 w-10 opacity-100 hover:scale-110 transition-transform duration-300" />
               </div>
 
-              <div className="hidden md:flex absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#0F36C7] text-xs font-bold text-white shadow-lg">
+              <div className="hidden md:flex absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#0F36C7] text-xs font-bold text-white shadow-lg hover:scale-110 transition-transform duration-300">
                 3
               </div>
-              
+
               {/* Mobile Step Indicator */}
-              <div className="flex md:hidden absolute left-4 top-0 h-8 w-8 items-center justify-center rounded-full bg-[#0F36C7] text-xs font-bold text-white shadow-lg order-0">
+              <div className="flex md:hidden absolute left-4 top-0 h-8 w-8 items-center justify-center rounded-full bg-[#0F36C7] text-xs font-bold text-white shadow-lg order-0 hover:scale-110 transition-transform duration-300">
                 3
               </div>
             </div>
 
             {/* Step 4 */}
-            <div className="relative grid grid-cols-1 md:grid-cols-2 items-center gap-6 md:gap-0">
+            <div className="relative grid grid-cols-1 md:grid-cols-2 items-center gap-6 md:gap-0 animate-fade-in-up" style={{ animationDelay: '0.9s' }}>
               <div className="flex justify-center md:justify-end order-1 md:order-1">
                 <img
                   src={Img9}
                   alt=""
-                  className="h-10 w-10 opacity-100 md:mr-20"
+                  className="h-10 w-10 opacity-100 md:mr-20 hover:scale-110 transition-transform duration-300"
                 />
               </div>
 
               <div className="md:pl-20 text-center md:text-left order-2 md:order-2">
-                <h3 className="mb-2 text-lg sm:text-xl font-semibold">Instant Download</h3>
+                <h3 className="mb-2 text-lg sm:text-xl font-semibold">
+                  Instant Download
+                </h3>
 
                 <p className="mx-auto md:max-w-xs text-sm leading-6 text-[#666]">
                   Retrieve your optimized files via a single ZIP or individual
@@ -686,12 +854,12 @@ const HeroSection = () => {
                 </p>
               </div>
 
-              <div className="hidden md:flex absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#0A5964] text-xs font-bold text-white shadow-lg">
+              <div className="hidden md:flex absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#0A5964] text-xs font-bold text-white shadow-lg hover:scale-110 transition-transform duration-300">
                 4
               </div>
-              
+
               {/* Mobile Step Indicator */}
-              <div className="flex md:hidden absolute left-4 top-0 h-8 w-8 items-center justify-center rounded-full bg-[#0A5964] text-xs font-bold text-white shadow-lg order-0">
+              <div className="flex md:hidden absolute left-4 top-0 h-8 w-8 items-center justify-center rounded-full bg-[#0A5964] text-xs font-bold text-white shadow-lg order-0 hover:scale-110 transition-transform duration-300">
                 4
               </div>
             </div>
@@ -701,9 +869,9 @@ const HeroSection = () => {
 
       {/* ============reduce file size=============*/}
 
-      <section className="bg-linear-to-r from-[#E3E8FE] to-[#AFF3FE] py-16 sm:py-20 lg:py-24">
+      <section className="bg-linear-to-r from-[#E3E8FE] to-[#AFF3FE] py-16 sm:py-20 lg:py-24 scroll-animate">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="mx-auto max-w-6xl rounded-3xl border border-[#1A7BFF] p-0.5 bg-linear-to-r from-[#0F3DCC] via-[#6E2AF4] to-[#005F78]">
+          <div className="mx-auto max-w-6xl rounded-3xl border border-[#1A7BFF] p-0.5 bg-linear-to-r from-[#0F3DCC] via-[#6E2AF4] to-[#005F78] animate-gradient">
             <div className="rounded-3xl bg-linear-to-br from-[#123CCB] via-[#6F2EF2] to-[#005E77] py-16 sm:py-20 lg:py-24 px-6 sm:px-8 text-center">
               <h2 className="mx-auto max-w-lg text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-white">
                 Ready To Reduce
@@ -717,11 +885,11 @@ const HeroSection = () => {
               </p>
 
               <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-                <button className="w-full sm:w-auto h-12 sm:h-13 rounded-full bg-white px-6 sm:px-8 text-sm font-semibold text-[#123CCB] transition hover:scale-105">
+                <button className="w-full sm:w-auto h-12 sm:h-13 rounded-full bg-white px-6 sm:px-8 text-sm font-semibold text-[#123CCB] transition hover:scale-105 animate-pulse shadow-lg hover:shadow-xl">
                   Start Compressing Now
                 </button>
 
-                <button className="w-full sm:w-auto h-12 sm:h-13 rounded-full border border-white/30 px-6 sm:px-8 text-sm font-medium text-white transition hover:bg-white/10">
+                <button className="w-full sm:w-auto h-12 sm:h-13 rounded-full border border-white/30 px-6 sm:px-8 text-sm font-medium text-white transition hover:bg-white/10 hover:scale-105 hover:shadow-lg">
                   View Documentation
                 </button>
               </div>
