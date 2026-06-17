@@ -19,6 +19,7 @@ import Img13 from "../assets/Background (5).svg"
 // import Img14 from "../assets/Icon.svg"
 import Img15 from "../assets/Container.png"
 import Img16 from "../assets/Icon (1).svg"
+import Img17 from "../assets/blue.svg"
 
 // container
 
@@ -379,9 +380,9 @@ const HeroSection = () => {
             {/* Lower Bandwidth */}
             <div className="col-span-12 lg:col-span-6 bg-[#24292E] rounded-3xl p-8 min-h-30 flex items-center">
               <img
-                src={Img16}
+                src={Img17}
                 alt=""
-                className="w-6 h-6 mr-4"
+                className="w-2 h-2 mr-4 mb-9"
               />
 
               <div>
